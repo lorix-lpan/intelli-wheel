@@ -1,11 +1,8 @@
 import Express from 'express';
-import socketIo from 'socket.io';
+// import socketIo from 'socket.io';
 import { Server as server } from 'http';
 
 import path from 'path';
-
-// Johnny Five
-import { Board, Led } from 'johnny-five';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -24,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // initialize socket.io
 const http = server(app);
-const io = socketIo(http);
+// const io = socketIo(http);
 
 app.use(Express.static(path.join(__dirname, '..', 'public')));
 
@@ -33,23 +30,3 @@ app.get('/', (req, res) => {
 });
 
 http.listen(3000, () => console.log('listening on 3000'));
-
-// initialize the board
-const myBoard = new Board();
-
-myBoard.on('ready', () => {
-  // initialize led
-  const led = new Led(13);
-  let stat = true;
-  led.on();
-
-  io.on('connection', (socket) => {
-    socket.emit('led:status', stat);
-    // register listener
-    socket.on('led:toggle', () => {
-      stat = !stat;
-      led.toggle();
-      io.emit('led:status', stat);
-    });
-  });
-});
