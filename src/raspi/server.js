@@ -1,7 +1,7 @@
 import Express from 'express';
 import socketIo from 'socket.io';
 import { Server as server } from 'http';
-// import gpio from 'rpi-gpio';
+import gpio from 'rpi-gpio';
 import path from 'path';
 
 
@@ -46,23 +46,33 @@ io.on('connection', socket => {
   socket.on('motor:toggle', (val) => {
     if (val) {
       motorState = !motorState;
-      io.emit('motor:state', motorState);
+      gpio.setup(40, gpio.DIR_OUT, () => {
+          gpio.write(40, motorState);
+          io.emit('motor:state', motorState);
+      });
     }
   });
 
   // start motion (toggle servo) -> block vs unbloc
   socket.on('servo:toggle', (val) => {
-    if (val) {
+    if (val) {  
       servoState = !servoState;
-      io.emit('servo:state', servoState);
+      gpio.setup(38, gpio.DIR_OUT, () => {
+          gpio.write(38, servoState);
+          io.emit('servo:state', servoState);
+     });
     }
   });
 
   // toggle direction -> forward vs reverse
   socket.on('direction:toggle', (val) => {
     if (val) {
-      directState = !directState;
-      io.emit('direction:state', directState);
+	directState = !directState;
+	gpio.setup(36, gpio.DIR_OUT, () => {
+          gpio.write(36, directState);
+          io.emit('direction:state', directState);
+      });
+
     }
   });
 
