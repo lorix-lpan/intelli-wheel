@@ -9,12 +9,12 @@ class ToggleButton extends Component {
     super(props);
 
     this.state = {};
-    this._setStatus = this._setState.bind(this);
+    this._setState = this._setState.bind(this);
     this._toggleEvent = this._toggleEvent.bind(this);
   }
 
   componentDidMount() {
-    socket.on(this.props.listenEvent, this._getStatus);
+    socket.on(this.props.listenEvent, this._setState);
   }
 
   _setState(state) {

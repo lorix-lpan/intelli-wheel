@@ -1,7 +1,7 @@
 import Express from 'express';
 import socketIo from 'socket.io';
 import { Server as server } from 'http';
-import  gpio from 'rpi-gpio'
+// import gpio from 'rpi-gpio';
 import path from 'path';
 
 
@@ -27,8 +27,6 @@ let motorState = false;
 let servoState = false;
 let directState = 1;
 
-
-
 app.use(Express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/', (req, res) => {
@@ -37,41 +35,39 @@ app.get('/', (req, res) => {
 
 http.listen(3000, () => console.log('listening on 3000'));
 
-const MotorPin  = 40
-const servoPin  = 30
-//gpio.setup(MotorPin, gpio.DRI_OUT, write);
-
-
-
+// gpio.setup(MotorPin, gpio.DRI_OUT, write);
 io.on('connection', socket => {
   // turn on/off the motors -> on vs off
-    socket.on('motor:toggle', (val) => {
-/*	gpio.write(MotorPin, val, function(err) {
-	    if (err) throw err;
-	}); */
-	motorState = val;
-	io.emit('motor:state', motorState);
-    });
+  // initial state
+  io.emit('motor:state', motorState);
+  io.emit('servo:state', servoState);
+  io.emit('direction:state', directState);
+
+  socket.on('motor:toggle', (val) => {
+    if (val) {
+      motorState = !motorState;
+      io.emit('motor:state', motorState);
+    }
+  });
 
   // start motion (toggle servo) -> block vs unbloc
-    socket.on('servo:toggle', (val) => {
-	console.log(val);
-/*	gpio.write(servoPin, val, fucntion(err) {
-	    if (err) throw err;
-	}); */
-	servoState = val;
-	io.emit('servo:state', servoState);
-	console.log(servoState);
+  socket.on('servo:toggle', (val) => {
+    if (val) {
+      servoState = !servoState;
+      io.emit('servo:state', servoState);
+    }
   });
 
   // toggle direction -> forward vs reverse
-    socket.on('direction:toggle', (val) => {
-	directState = val;
-	io.emit('direction:state', directState);
+  socket.on('direction:toggle', (val) => {
+    if (val) {
+      directState = !directState;
+      io.emit('direction:state', directState);
+    }
   });
 
   // listen to motor speed (analog)
-    socket.on('motor:speed', () => {
-	
+  socket.on('motor:speed', () => {
+
   });
 });
