@@ -1,10 +1,15 @@
 import React from 'react';
-import LedControl from './LedControl';
+import ToggleButton from './shared/ToggleButton';
 
 function App() {
   return (
     <div>
-      <LedControl />
+      <ToggleButton
+        listenEvent="motor:toggle"
+        emitEvent="motor:state"
+        btnName="Toggle Motor"
+        stateName="Motor State"
+      />
     </div>
   );
 }
