@@ -80,8 +80,8 @@ io.on('connection', socket => {
   socket.on('led:toggle', (val) => {
     if (val) {
       ledState = !ledState;
-      gpio.setup(34, gpio.DIR_OUT, () => {
-        gpio.write(34, ledState);
+      gpio.setup(32, gpio.DIR_OUT, () => {
+        gpio.write(32, ledState);
         io.emit('led:state', ledState);
       });
     }
