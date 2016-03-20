@@ -55,11 +55,13 @@ io.on('connection', socket => {
 
   // start motion (toggle servo) -> block vs unbloc
     socket.on('servo:toggle', (val) => {
+	console.log(val);
 /*	gpio.write(servoPin, val, fucntion(err) {
 	    if (err) throw err;
 	}); */
 	servoState = val;
 	io.emit('servo:state', servoState);
+	console.log(servoState);
   });
 
   // toggle direction -> forward vs reverse
