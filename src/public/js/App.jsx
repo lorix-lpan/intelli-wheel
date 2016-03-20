@@ -6,9 +6,13 @@ const toggleType = {
   direction: ['Forward', 'Backward'],
 };
 
+const contStyle = {
+  marginTop: '2em',
+};
+
 function App() {
   return (
-    <div>
+    <div style={contStyle}>
       <ToggleButton
         emitEvent="motor:toggle"
         listenEvent="motor:state"

@@ -3,6 +3,10 @@ import io from 'socket.io-client';
 
 const socket = io();
 
+const fontStyle = {
+  fontSize: '2em',
+};
+
 class ToggleButton extends Component {
 
   constructor(props) {
@@ -28,11 +32,13 @@ class ToggleButton extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this._toggleEvent}>{this.props.btnName}</button>
-        <p>
-          {this.props.stateName}: { this.state.toggleState ? this.props.type[0] : this.props.type[1] }
-        </p>
+      <div className="row center-xs">
+        <div className="col-xs-10 col-md-6">
+          <button style={fontStyle} className="button" onClick={this._toggleEvent}>{this.props.btnName}</button>
+          <p style={fontStyle}>
+            {this.props.stateName}: { this.state.toggleState ? this.props.type[0] : this.props.type[1] }
+          </p>
+        </div>
       </div>
     );
   }
