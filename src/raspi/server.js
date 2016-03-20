@@ -1,5 +1,5 @@
 import Express from 'express';
-// import socketIo from 'socket.io';
+import socketIo from 'socket.io';
 import { Server as server } from 'http';
 
 import path from 'path';
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // initialize socket.io
 const http = server(app);
-// const io = socketIo(http);
+const io = socketIo(http);
 
 app.use(Express.static(path.join(__dirname, '..', 'public')));
 
@@ -30,3 +30,21 @@ app.get('/', (req, res) => {
 });
 
 http.listen(3000, () => console.log('listening on 3000'));
+
+io.on('connection', socket => {
+  // turn on/off the motors -> on vs off
+  socket.on('motor:toggle', () => {
+  });
+
+  // start motion (toggle servo) -> block vs unbloc
+  socket.on('servo:toggle', () => {
+  });
+
+  // toggle direction -> forward vs reverse
+  socket.on('motor:direction', () => {
+  });
+
+  // listen to motor speed (analog)
+  socket.on('motor:speed', () => {
+  });
+});
