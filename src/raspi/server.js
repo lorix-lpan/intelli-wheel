@@ -77,7 +77,7 @@ io.on('connection', socket => {
   });
 
   // listen to motor speed (analog)
-  socket.on('led:toggle', () => {
+  socket.on('led:toggle', (val) => {
     if (val) {
       ledState = !ledState;
       gpio.setup(34, gpio.DIR_OUT, () => {
