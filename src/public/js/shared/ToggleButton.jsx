@@ -30,7 +30,9 @@ class ToggleButton extends Component {
     return (
       <div>
         <button onClick={this._toggleEvent}>{this.props.btnName}</button>
-        <p>{this.props.stateName}: { this.state.toggleState ? 'On' : 'Off' }</p>
+        <p>
+          {this.props.stateName}: { this.state.toggleState ? this.props.type[0] : this.props.type[1] }
+        </p>
       </div>
     );
   }
@@ -41,6 +43,7 @@ ToggleButton.propTypes = {
   listenEvent: PropTypes.string.isRequired,
   btnName: PropTypes.string.isRequired,
   stateName: PropTypes.string.isRequired,
+  type: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ToggleButton;
