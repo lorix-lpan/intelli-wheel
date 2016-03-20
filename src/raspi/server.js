@@ -47,32 +47,31 @@ io.on('connection', socket => {
     if (val) {
       motorState = !motorState;
       gpio.setup(40, gpio.DIR_OUT, () => {
-          gpio.write(40, motorState);
-          io.emit('motor:state', motorState);
+        gpio.write(40, motorState);
+        io.emit('motor:state', motorState);
       });
     }
   });
 
   // start motion (toggle servo) -> block vs unbloc
   socket.on('servo:toggle', (val) => {
-    if (val) {  
+    if (val) {
       servoState = !servoState;
       gpio.setup(38, gpio.DIR_OUT, () => {
-          gpio.write(38, servoState);
-          io.emit('servo:state', servoState);
-     });
+        gpio.write(38, servoState);
+        io.emit('servo:state', servoState);
+      });
     }
   });
 
   // toggle direction -> forward vs reverse
   socket.on('direction:toggle', (val) => {
     if (val) {
-	directState = !directState;
-	gpio.setup(36, gpio.DIR_OUT, () => {
-          gpio.write(36, directState);
-          io.emit('direction:state', directState);
+      directState = !directState;
+      gpio.setup(36, gpio.DIR_OUT, () => {
+        gpio.write(36, directState);
+        io.emit('direction:state', directState);
       });
-
     }
   });
 
