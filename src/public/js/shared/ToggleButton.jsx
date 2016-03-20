@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 const socket = io();
 
 const fontStyle = {
-  fontSize: '2em',
+  fontSize: '1.5em',
 };
 
 class ToggleButton extends Component {

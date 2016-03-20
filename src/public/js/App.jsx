@@ -7,7 +7,7 @@ const toggleType = {
 };
 
 const contStyle = {
-  marginTop: '2em',
+  marginTop: '1em',
 };
 
 function App() {
@@ -33,6 +33,13 @@ function App() {
         btnName="Toggle Direction"
         stateName="Direction State"
         type={toggleType.direction}
+      />
+      <ToggleButton
+        emitEvent="led:toggle"
+        listenEvent="led:state"
+        btnName="Toggle LED"
+        stateName="LED State"
+        type={toggleType.onOff}
       />
     </div>
   );

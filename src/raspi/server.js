@@ -26,6 +26,7 @@ const io = socketIo(http);
 let motorState = false;
 let servoState = false;
 let directState = 1;
+let ledState = false;
 
 app.use(Express.static(path.join(__dirname, '..', 'public')));
 
@@ -76,7 +77,13 @@ io.on('connection', socket => {
   });
 
   // listen to motor speed (analog)
-  socket.on('motor:speed', () => {
-
+  socket.on('led:toggle', () => {
+    if (val) {
+      ledState = !ledState;
+      gpio.setup(34, gpio.DIR_OUT, () => {
+        gpio.write(34, ledState);
+        io.emit('led:state', ledState);
+      });
+    }
   });
 });
